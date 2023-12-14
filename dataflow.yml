@@ -1,0 +1,32 @@
+nodes:
+  - id: audio
+    custom:
+      source: shell
+      args: python audio_op.py
+      inputs:
+        tick: dora/timer/millis/1000
+      outputs:
+        - path
+
+  - id: whisper
+    custom:
+      source: shell
+      args: python whisper_op.py
+      inputs:
+        path: audio/path
+      outputs:
+        - text
+
+  - id: argo
+    custom:
+      source: shell
+      args: python argo_translate_op.py
+      inputs:
+        text: whisper/text
+
+  - id: plot
+    custom:
+      source: shell
+      args: python argo_translate_op.py
+      inputs:
+        text: whisper/text
